@@ -1,0 +1,60 @@
+body{
+    background-color: rgb(101, 107, 107);
+}
+.form{
+    width: 50%;
+    margin: 50px auto;
+}
+a{
+    text-decoration: none;
+    padding: 4px;
+    border-radius: 5px;
+    color: #fff;
+}
+#content{
+    margin-left: 50px;
+    height: 40px;
+    width: 400px;
+    position: relative;
+}
+button{
+    font-size: 15px;
+    height: 45px;
+    width: 100px;
+    background-color: olivedrab;
+}
+.form-top i{
+    position: absolute;
+    top: 110px;
+    right: 580px;
+    cursor: pointer;
+}
+.line-through{
+    text-decoration: line-through;
+} 
+#list-tasks{
+    margin-left: 50px; 
+    width: 600px;
+}
+#list-tasks ul{
+    list-style: none;
+    
+}
+#list-tasks ul li{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-left: -20px;
+    color: #fff;
+    font-size: 20px;
+}
+#list-tasks ul li a:nth-child(2){
+    margin-right: 150px;
+    background-color: red;
+    
+}
+.btn-bot{
+    width: 90px;
+    height: 30px;
+    background-color: #a39696;
+}

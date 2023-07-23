@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="form">
+        <h2 style="color: #fff;">VIỆC LÀM:</h2>
+        <form style="display: block;" onsubmit="submitTask()" class="form-top">
+            
+            <input type="text"  id="content" class="content" placeholder="Nhập công việc..">
+            <i id="all" onclick="CheckAll()" class="fa-solid fa-chevron-down"></i>
+            <button id="Add" type="submit">Lưu</button>
+        </form>
+
+        <div id="list-tasks">
+            <div id="result">
+                
+            </div>
+        </div>
+        <div style="display: flex;justify-content: end; margin-right: 110px;">
+            <button class="btn-bot" onclick="renderTask(null, 'ALL')">All</button>
+            <button class="btn-bot" onclick="renderTask(null, 'ACTIVE')">Active</button>
+            <button class="btn-bot" onclick="renderTask(null, 'COMPLETED')">Completed</button>
+            <button class="btn-bot" onclick="clearComplete()">Clear</button>
+
+        </div>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>
