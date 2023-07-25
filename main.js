@@ -18,7 +18,6 @@ function submitTask() {
   tasks.push({
     name: taskName.value,
     id: Math.floor(Math.random() * 99999),
-    order: size + 1,
     completed: false,
   });
 
@@ -136,3 +135,10 @@ function CheckAll() {
 // }
 
 // isChecked = !isChecked
+
+let num = 10
+num = ''
+
+const sum = (a, b) =>{
+  return a + b
+}
