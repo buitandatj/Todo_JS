@@ -1,14 +1,16 @@
 var taskName = document.getElementById("content");
 const getFromLocal = () => {
-  return localStorage.getItem("tasks")
-    ? JSON.parse(localStorage.getItem("tasks"))
-    : [];
+  return localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : [];
 };
 
-renderTask(getFromLocal());
+const saveTask = (newtasks) => {
+  localStorage.setItem("tasks", JSON.stringify(newtasks));
+  renderTask(newtasks);
+};
+
 function submitTask() {
   if (!taskName.value) {
-    alert("Vui lòng nhập");
+    alert("Vui lòng nhập...");
     return false;
   }
   let tasks = getFromLocal();
@@ -27,7 +29,7 @@ function submitTask() {
 function completeTask(id) {
   tasks = getFromLocal();
 
-  const newTasks = tasks?.map((t) => {
+  const newTasks = tasks.map((t) => {
     if (t.id === id) {
       t.completed = !t.completed;
     }
@@ -37,20 +39,6 @@ function completeTask(id) {
   localStorage.setItem("tasks", JSON.stringify(newTasks));
   renderTask(newTasks);
 }
-
-function deleteTask(id) {
-  let tasks = getFromLocal();
-  const newTasks = tasks?.filter((task) => {
-    console.log(id, task?.id !== id);
-    return task?.id !== id;
-  });
-  console.log(newTasks);
-  saveTask(newTasks);
-}
-const saveTask = (newtasks) => {
-  localStorage.setItem("tasks", JSON.stringify(newtasks));
-  renderTask(newtasks);
-};
 function clearComplete() {
   let tasks = getFromLocal();
   const newTasks = tasks.filter((e) => {
@@ -59,35 +47,66 @@ function clearComplete() {
   saveTask(newTasks);
 }
 
+function deleteTask(id) {
+  let tasks = getFromLocal();
+  const newTasks = tasks.filter((task) => {
+    console.log(id, task.id !== id);
+    return task?.id !== id;
+  });
+  saveTask(newTasks);
+}
 function renderTask(tasks = [], filter) {
   let content = "<ul>";
   if (tasks == null) {
     tasks = getFromLocal();
   }
+  const hasComplete = tasks.find((x) => x.completed);
+  if (!hasComplete) {
+    document.getElementById("clear").style.visibility = "hidden";
+  } else {
+    document.getElementById("clear").style.visibility = "visible";
+  }
+
   tasks.forEach((task) => {
-    if (filter == "COMPLETED" && !task?.completed) {
+    if (filter == "COMPLETED" && !task.completed) {
       return;
-    } else if (filter == "ACTIVE" && task?.completed) {
+    } else if (filter == "ACTIVE" && task.completed) {
       return;
     }
-    content += `<li class="task-item">
-                    <div id="${task?.id}"  class='${
-      task.completed ? "line-through" : ""
-    } task-name'>${task.name}</div>
+    content += `<li class="task-item"  >
+                    <div id="${task?.id}" contenteditable="true" onblur="editTask(${
+      task?.id
+    })" class='${task.completed ? "line-through" : ""} task-name'>${
+      task.name
+    }</div>
                     <div>
                         <input ${
                           task.completed ? "checked" : ""
-                        } onclick="completeTask(${task.id})" type='checkbox'> 
-                        <a href="#" onclick="deleteTask(${task.id})">Xóa</a>
+                        } onclick="completeTask(${
+      task.id
+    })" type='checkbox' id="checkbox"> 
+                        <span onclick="deleteTask(${task.id})">Xóa</span>
                     </div>
                 </li>`;
   });
 
   content += "</ul>";
-
-  document.getElementById("result").innerHTML = content;
+  const ele = document.getElementById("result");
+  if (ele) ele.innerHTML = content;
 }
+renderTask(getFromLocal());
 
+function editTask(id) {
+  let tasks = getFromLocal();
+  const newTasks = tasks.map(function (e) {
+    if (e.id == id) {
+      var edit = document.getElementById(id + "").innerText;
+      return { ...e, name: edit };
+    }
+    return e;
+  });
+  saveTask(newTasks);
+}
 function CheckAll() {
   let tasks = getFromLocal();
   let allComplete = false;
@@ -97,13 +116,15 @@ function CheckAll() {
       countComplete += 1;
     }
   }
-  allComplete = countComplete === tasks?.length ? false : true;
+  allComplete = countComplete === tasks.length ? false : true;
   const newTasks = tasks.map(function (e) {
     e.completed = allComplete;
     return e;
   });
   saveTask(newTasks);
 }
+
+
 
 // const todoList = []
 

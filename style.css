@@ -48,9 +48,15 @@ button{
     color: #fff;
     font-size: 20px;
 }
-#list-tasks ul li a:nth-child(2){
+#list-tasks ul li>div{
+    width: 500px;
+}
+#list-tasks ul li span{
+    padding: 5px;
+    border-radius: 5px;
     margin-right: 150px;
     background-color: red;
+    cursor: pointer;
     
 }
 .btn-bot{
